@@ -40,7 +40,7 @@ const AssessmentResult = () => {
           <h1 className="text-2xl font-bold text-gray-800">Assessment Report</h1>
           <p className="text-gray-500">ID: {id} • Generated on Oct 24, 2026</p>
         </div>
-        <button className="px-4 py-2 bg-idbi-teal text-white rounded-md font-medium hover:bg-idbi-darkTeal transition-colors">
+        <button className="px-4 py-2 bg-finsight-teal text-white rounded-md font-medium hover:bg-finsight-darkTeal transition-colors">
           Download PDF
         </button>
       </div>
@@ -106,9 +106,9 @@ const AssessmentResult = () => {
         </Card>
       </div>
 
-      <Card className="border-idbi-teal/20 bg-idbi-teal/5">
+      <Card className="border-finsight-teal/20 bg-finsight-teal/5">
         <CardHeader className="flex flex-row items-center gap-2">
-          <Info size={20} className="text-idbi-teal" />
+          <Info size={20} className="text-finsight-teal" />
           Credit Recommendation
         </CardHeader>
         <CardContent>

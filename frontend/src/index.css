@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-idbi-teal: #008479;
-  --color-idbi-orange: #ED752C;
-  --color-idbi-darkTeal: #00665e;
-  --color-idbi-lightTeal: #e6f3f2;
-  --color-idbi-beige: #fcfaf6;
+  --color-finsight-teal: #008479;
+  --color-finsight-orange: #ED752C;
+  --color-finsight-darkTeal: #00665e;
+  --color-finsight-lightTeal: #e6f3f2;
+  --color-finsight-beige: #fcfaf6;
 }
 
 @layer base {
   body {
-    @apply bg-idbi-beige text-gray-800 antialiased;
+    @apply bg-finsight-beige text-gray-800 antialiased;
   }
 }

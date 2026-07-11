@@ -58,7 +58,7 @@ const NewAssessment = () => {
                   name="business_pan"
                   value={formData.business_pan}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-idbi-teal focus:border-idbi-teal outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
                   placeholder="e.g. ABCDE1234F" 
                 />
               </div>
@@ -70,7 +70,7 @@ const NewAssessment = () => {
                   name="gstin"
                   value={formData.gstin}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-idbi-teal focus:border-idbi-teal outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
                   placeholder="e.g. 27ABCDE1234F1Z5" 
                 />
               </div>
@@ -82,7 +82,7 @@ const NewAssessment = () => {
                   name="bank_account_number"
                   value={formData.bank_account_number}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-idbi-teal focus:border-idbi-teal outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
                   placeholder="e.g. 0123456789" 
                 />
               </div>
@@ -94,7 +94,7 @@ const NewAssessment = () => {
                   name="ifsc_code"
                   value={formData.ifsc_code}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-idbi-teal focus:border-idbi-teal outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
                   placeholder="e.g. IBKL0000001" 
                 />
               </div>
@@ -113,7 +113,7 @@ const NewAssessment = () => {
               <button 
                 type="submit" 
                 disabled={loading}
-                className="bg-idbi-orange hover:bg-[#d66523] text-white px-6 py-2 rounded-md font-medium transition-colors flex items-center gap-2 disabled:opacity-70"
+                className="bg-finsight-orange hover:bg-[#d66523] text-white px-6 py-2 rounded-md font-medium transition-colors flex items-center gap-2 disabled:opacity-70"
               >
                 {loading && <Loader2 size={16} className="animate-spin" />}
                 {loading ? 'Processing...' : 'Run Assessment'}

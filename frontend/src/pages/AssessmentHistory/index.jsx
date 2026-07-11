@@ -36,7 +36,7 @@ const AssessmentHistory = () => {
               placeholder="Search by business name or ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-idbi-teal focus:border-idbi-teal outline-none"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
             />
           </div>
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
@@ -64,7 +64,7 @@ const AssessmentHistory = () => {
                     className="hover:bg-gray-50 transition-colors cursor-pointer group"
                     onClick={() => navigate(`/assessment/${item.id}`)}
                   >
-                    <td className="px-6 py-4 text-sm font-medium text-idbi-teal">{item.id}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-finsight-teal">{item.id}</td>
                     <td className="px-6 py-4 text-sm text-gray-800">{item.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-500">{item.date}</td>
                     <td className="px-6 py-4 text-sm font-medium">{item.score}</td>
@@ -79,7 +79,7 @@ const AssessmentHistory = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <ChevronRight size={18} className="text-gray-400 group-hover:text-idbi-teal transition-colors" />
+                      <ChevronRight size={18} className="text-gray-400 group-hover:text-finsight-teal transition-colors" />
                     </td>
                   </tr>
                 ))}

@@ -1,7 +1,7 @@
 import { Card, CardContent } from './Card';
 import clsx from 'clsx';
 
-export const MetricCard = ({ title, value, icon: Icon, trend, trendLabel, colorClass = "text-idbi-teal" }) => {
+export const MetricCard = ({ title, value, icon: Icon, trend, trendLabel, colorClass = "text-finsight-teal" }) => {
   return (
     <Card>
       <CardContent className="flex items-start justify-between">

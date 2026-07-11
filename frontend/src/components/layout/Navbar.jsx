@@ -1,4 +1,4 @@
-import { Menu, Bell, UserCircle } from 'lucide-react';
+import { Menu, Bell, UserCircle, Search, Globe, ChevronDown, Phone, Mail } from 'lucide-react';
 import useAppStore from '../../store/useAppStore';
 
 const Navbar = () => {
@@ -6,34 +6,77 @@ const Navbar = () => {
   const user = useAppStore((state) => state.user);
 
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sticky top-0 z-10">
-      <div className="flex items-center gap-4">
-        <button 
-          onClick={toggleSidebar}
-          className="p-2 text-gray-500 hover:bg-gray-100 rounded-md transition-colors"
-        >
-          <Menu size={20} />
-        </button>
-        <div className="hidden sm:block">
-          <h2 className="text-lg font-semibold text-gray-800">MSME Financial Health Card</h2>
+    <div className="flex flex-col w-full sticky top-0 z-10 shadow-sm">
+      {/* Top Utility Bar (Very Dense) */}
+      <div className="h-8 bg-finsight-darkTeal text-white text-xs flex items-center justify-between px-4">
+        <div className="flex items-center gap-4">
+          <span className="hover:text-finsight-orange cursor-pointer transition-colors">Personal</span>
+          <span className="text-gray-400">|</span>
+          <span className="hover:text-finsight-orange cursor-pointer transition-colors font-semibold">Corporate</span>
+          <span className="text-gray-400">|</span>
+          <span className="hover:text-finsight-orange cursor-pointer transition-colors">NRI</span>
+          <span className="text-gray-400">|</span>
+          <span className="hover:text-finsight-orange cursor-pointer transition-colors">Investor Relations</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 hover:text-finsight-orange cursor-pointer transition-colors">
+            <Phone size={12} />
+            <span>1800-FIN-SIGHT</span>
+          </div>
+          <div className="flex items-center gap-1 hover:text-finsight-orange cursor-pointer transition-colors">
+            <Mail size={12} />
+            <span>corporate@finsight.com</span>
+          </div>
+          <div className="flex items-center gap-1 border-l border-gray-500 pl-4 hover:text-finsight-orange cursor-pointer transition-colors">
+            <Globe size={12} />
+            <span>English</span>
+            <ChevronDown size={12} />
+          </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative">
-          <Bell size={20} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-idbi-orange rounded-full"></span>
-        </button>
-        
-        <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
-          <div className="text-right hidden sm:block">
-            <p className="text-sm font-medium text-gray-800">{user.name}</p>
-            <p className="text-xs text-gray-500">{user.role}</p>
+      {/* Main Header Area */}
+      <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4">
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={toggleSidebar}
+            className="p-2 text-gray-500 hover:bg-gray-100 rounded-md transition-colors"
+          >
+            <Menu size={20} />
+          </button>
+          <div className="hidden sm:block">
+            <h2 className="text-xl font-bold text-gray-800 tracking-tight">FinSight <span className="font-normal text-finsight-teal text-lg">Enterprise Assessment</span></h2>
           </div>
-          <UserCircle size={32} className="text-gray-400" />
         </div>
-      </div>
-    </header>
+
+        {/* Global Search */}
+        <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
+          <div className="relative w-full">
+            <input 
+              type="text" 
+              placeholder="Search companies, GSTIN, or reports..." 
+              className="w-full pl-10 pr-4 py-1.5 bg-gray-50 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-finsight-teal focus:border-finsight-teal"
+            />
+            <Search size={16} className="absolute left-3 top-2 text-gray-400" />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative">
+            <Bell size={20} />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-finsight-orange rounded-full"></span>
+          </button>
+          
+          <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
+            <div className="text-right hidden sm:block leading-tight">
+              <p className="text-sm font-semibold text-gray-800">{user.name}</p>
+              <p className="text-[10px] uppercase font-bold tracking-wider text-finsight-teal">{user.role}</p>
+            </div>
+            <UserCircle size={32} className="text-gray-400 cursor-pointer hover:text-finsight-teal transition-colors" />
+          </div>
+        </div>
+      </header>
+    </div>
   );
 };
 
