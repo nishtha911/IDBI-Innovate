@@ -1,0 +1,101 @@
+business_id,business_name,entity_type,industry_sector,vintage_months,kyc_status,credit_history_length_months,simulated_cohort,location.state,location.city,location.tier
+MSME_086391780,Gola-Hayre,Private Limited,B2B Software,73,Verified,0,Green,West Bengal,Meerut,3
+MSME_677785212,Krishnan-Tak,Private Limited,Wholesale,80,Verified,0,Green,Assam,Nanded,3
+MSME_178086026,Rau-Jayaraman,Proprietorship,Retail,90,Verified,0,Green,Arunachal Pradesh,Unnao,2
+MSME_602830083,Mukhopadhyay-Korpal,Proprietorship,B2B Software,93,Verified,0,Red,Tripura,Morena,3
+MSME_464024553,Kapoor PLC,Partnership,Manufacturing,111,Pending,0,Green,Manipur,Bally,1
+MSME_182380024,"Yogi, Babu and Raman",Partnership,Wholesale,44,Verified,0,Red,Kerala,Ahmednagar,1
+MSME_389744086,"Pai, Parmer and Sinha",Proprietorship,Retail,116,Verified,0,Amber,Tripura,Ludhiana,2
+MSME_376463019,Johal Ltd,Proprietorship,Retail,113,Verified,0,Green,Himachal Pradesh,Udaipur,2
+MSME_109492877,Sani Group,Proprietorship,Services,38,Verified,0,Green,Bihar,Burhanpur,2
+MSME_907927242,Manda Ltd,Proprietorship,Services,51,Verified,0,Red,Andhra Pradesh,Nizamabad,2
+MSME_265345694,"Balakrishnan, Jaggi and Tandon",LLP,B2B Software,108,Verified,0,Red,Maharashtra,Khandwa,2
+MSME_323044670,Vyas-Sabharwal,Proprietorship,Services,51,Verified,0,Green,Punjab,Nadiad,1
+MSME_293316219,Sandhu-Bhavsar,Partnership,Manufacturing,57,Verified,0,Red,Kerala,Bhagalpur,2
+MSME_097089452,Dara and Sons,Proprietorship,Manufacturing,107,Verified,0,Red,Arunachal Pradesh,Proddatur,1
+MSME_931647358,Kashyap PLC,LLP,Wholesale,55,Verified,0,Green,Maharashtra,Vijayawada,2
+MSME_525957563,"Parsa, Dewan and Ranganathan",Partnership,Services,113,Verified,0,Amber,Uttar Pradesh,Aligarh,2
+MSME_162672383,Setty-Mutti,Proprietorship,Services,69,Verified,0,Green,Telangana,Junagadh,1
+MSME_036125107,"Mall, Ram and Banik",Proprietorship,Wholesale,108,Verified,0,Green,Tripura,Ballia,2
+MSME_955327206,Dass-Chawla,LLP,Retail,71,Verified,0,Red,Sikkim,Vadodara,2
+MSME_438717791,Din-Singh,Private Limited,B2B Software,88,Verified,0,Green,Kerala,Jodhpur,3
+MSME_057448052,"Chakraborty, Sawhney and Chakrabarti",Private Limited,Wholesale,50,Verified,0,Green,Tripura,Thane,1
+MSME_683442569,Bhalla PLC,LLP,Manufacturing,96,Verified,0,Green,Goa,Gaya,3
+MSME_328136001,Purohit-Wagle,Partnership,Manufacturing,97,Verified,0,Green,Odisha,Tenali,2
+MSME_608675946,Mammen-Shanker,LLP,B2B Software,118,Pending,0,Red,Meghalaya,Gwalior,2
+MSME_397693105,Cherian Group,LLP,Services,51,Verified,0,Amber,Madhya Pradesh,Karimnagar,2
+MSME_384669616,Bhandari Group,LLP,Manufacturing,89,Verified,0,Green,Manipur,Karimnagar,1
+MSME_600241601,"Iyer, Sachdeva and Doshi",Proprietorship,Services,62,Verified,0,Green,Odisha,Ramgarh,1
+MSME_592894608,"Bumb, Dayal and Sahota",Partnership,Retail,117,Verified,0,Green,Uttar Pradesh,Madurai,1
+MSME_717876575,Agrawal-Kata,Proprietorship,Retail,100,Verified,0,Green,Tripura,Amroha,3
+MSME_670149513,Thakkar-Bal,Private Limited,Wholesale,69,Verified,0,Green,Bihar,Etawah,1
+MSME_898267512,Raju-Ramanathan,LLP,Manufacturing,60,Verified,0,Red,Chhattisgarh,Kakinada,1
+MSME_983184155,Seth PLC,Partnership,Services,96,Verified,0,Red,Arunachal Pradesh,Silchar,2
+MSME_481516765,"Menon, Raval and Sharaf",Proprietorship,Retail,25,Verified,0,Red,Karnataka,Bhagalpur,1
+MSME_935136700,Memon-Kohli,Private Limited,Services,49,Verified,0,Amber,Uttarakhand,Bhiwandi,1
+MSME_329398389,"Boase, Tata and Wason",Private Limited,Manufacturing,72,Verified,0,Red,Uttarakhand,Visakhapatnam,3
+MSME_045274338,Thakkar-Rau,Partnership,Manufacturing,39,Pending,0,Green,Andhra Pradesh,Asansol,1
+MSME_915647126,Mohanty-Sarna,Private Limited,Wholesale,71,Verified,0,Red,Uttar Pradesh,Kota,2
+MSME_398833247,"Kohli, Soni and Seth",LLP,B2B Software,79,Verified,0,Amber,Punjab,Jaipur,3
+MSME_866027272,Kulkarni-Chauhan,Private Limited,Retail,117,Verified,0,Green,Assam,Haldia,2
+MSME_951114141,Handa PLC,Proprietorship,B2B Software,105,Verified,0,Green,Bihar,Visakhapatnam,2
+MSME_116480903,Iyer-Tiwari,LLP,Services,88,Verified,0,Green,Chhattisgarh,Raebareli,1
+MSME_734122126,Murthy Inc,LLP,Retail,77,Verified,0,Red,Goa,Firozabad,2
+MSME_834884804,"Din, Patla and Brahmbhatt",Proprietorship,Services,86,Verified,0,Amber,Punjab,Mehsana,2
+MSME_945656800,Deep Ltd,Private Limited,Retail,28,Verified,0,Red,West Bengal,Gaya,2
+MSME_625993396,Baria-Dalal,Proprietorship,Retail,117,Verified,0,Red,Andhra Pradesh,Anantapur,1
+MSME_573775464,"Purohit, Kuruvilla and Srivastava",LLP,Manufacturing,52,Verified,0,Amber,Telangana,Navi Mumbai,3
+MSME_156848879,Dass-Mani,Proprietorship,Retail,45,Verified,0,Green,Bihar,Kanpur,3
+MSME_930472072,"Randhawa, Gera and Choudhary",Private Limited,Services,52,Verified,0,Green,Manipur,Guntur,2
+MSME_210376898,Sampath-Dani,Proprietorship,Wholesale,115,Verified,0,Green,Punjab,Coimbatore,3
+MSME_503658307,Saraf and Sons,Proprietorship,Manufacturing,56,Verified,0,Green,Haryana,Bharatpur,2
+MSME_922097805,Sundaram PLC,Partnership,B2B Software,94,Verified,0,Green,Nagaland,Bellary,3
+MSME_148365649,"Chanda, Luthra and Divan",Proprietorship,Retail,74,Verified,0,Red,Manipur,Bhilai,3
+MSME_735423799,Krishna-Andra,Partnership,Manufacturing,73,Verified,0,Amber,Kerala,Thane,3
+MSME_596604931,"Kashyap, Sachdev and Palla",Proprietorship,Retail,70,Verified,0,Red,Meghalaya,Chapra,3
+MSME_577239044,Singhal-Sengupta,Private Limited,Wholesale,50,Verified,0,Amber,Goa,Anantapuram,2
+MSME_876749021,Dada LLC,Proprietorship,B2B Software,49,Verified,0,Red,Andhra Pradesh,Kulti,1
+MSME_217224442,Kumar-Cheema,LLP,Wholesale,114,Verified,0,Green,Assam,Sri Ganganagar,1
+MSME_706184873,"Anand, Nigam and Wagle",LLP,B2B Software,82,Verified,0,Amber,Rajasthan,Meerut,1
+MSME_681188276,Doshi LLC,LLP,Services,108,Verified,0,Green,Kerala,Jodhpur,2
+MSME_760950197,Dasgupta-Dayal,LLP,Wholesale,89,Verified,0,Amber,Manipur,Giridih,1
+MSME_163891603,Rattan Group,Partnership,Services,64,Verified,0,Red,Tamil Nadu,Thiruvananthapuram,2
+MSME_293600297,"Randhawa, Pingle and Sama",Proprietorship,Manufacturing,111,Verified,0,Green,Odisha,Nangloi Jat,1
+MSME_034241457,Dora-Tara,Partnership,B2B Software,107,Verified,0,Green,Himachal Pradesh,Bidar,1
+MSME_234700823,Deo Ltd,LLP,B2B Software,106,Verified,0,Amber,Mizoram,Chandigarh,2
+MSME_983789550,"Sule, Ravel and Rau",Proprietorship,Manufacturing,63,Verified,0,Green,Tripura,Tumkur,3
+MSME_242200660,Andra-Ram,Private Limited,Services,75,Verified,0,Green,Goa,Jorhat,2
+MSME_063365850,Munshi-Ganesh,Partnership,Retail,46,Verified,0,Green,Chhattisgarh,Indore,1
+MSME_259581076,Varughese-Keer,Partnership,Wholesale,91,Verified,0,Red,Telangana,Jalgaon,1
+MSME_445640461,Kari and Sons,LLP,B2B Software,31,Verified,0,Green,Tripura,Meerut,3
+MSME_825603925,Bhakta-Kanda,Partnership,B2B Software,70,Verified,0,Green,Rajasthan,Adoni,3
+MSME_447369952,"Loke, Ravi and Sinha",Proprietorship,Wholesale,64,Verified,0,Amber,Himachal Pradesh,Surendranagar Dudhrej,2
+MSME_625354755,Gala-Sunder,Private Limited,Retail,74,Verified,0,Red,Uttarakhand,Mau,1
+MSME_143705672,Goyal Ltd,Partnership,Wholesale,88,Verified,0,Green,Madhya Pradesh,Tiruvottiyur,1
+MSME_684706453,Mannan-Gera,Private Limited,Retail,107,Verified,0,Amber,Madhya Pradesh,Bhubaneswar,1
+MSME_199574834,Ravi-Gaba,Proprietorship,Manufacturing,33,Verified,0,Green,Gujarat,Durg,1
+MSME_741155865,Sood-Kaul,Partnership,Manufacturing,96,Verified,0,Amber,Rajasthan,Firozabad,2
+MSME_083551270,"Saran, Shere and Gour",Proprietorship,Retail,82,Verified,0,Amber,Rajasthan,Madanapalle,1
+MSME_872243769,Nanda-Kumar,Private Limited,Services,111,Verified,0,Green,Assam,Burhanpur,2
+MSME_403941264,Panchal-Lad,Partnership,Wholesale,103,Verified,0,Green,Odisha,Katni,1
+MSME_612792794,Thakkar-Chaudhary,Private Limited,B2B Software,93,Verified,0,Green,Meghalaya,Navi Mumbai,1
+MSME_203138009,Bajwa Group,LLP,B2B Software,107,Verified,0,Green,West Bengal,Visakhapatnam,1
+MSME_635530403,Patel-Sarraf,LLP,Services,75,Verified,0,Amber,Manipur,Korba,2
+MSME_534033361,"Deshpande, Saha and Oza",LLP,Retail,67,Verified,0,Green,Tamil Nadu,Morena,1
+MSME_058907367,Narasimhan-Hayre,LLP,B2B Software,89,Verified,0,Amber,Karnataka,Kolkata,1
+MSME_121804727,Pandya and Sons,Private Limited,Manufacturing,33,Verified,0,Green,Jharkhand,Amaravati,1
+MSME_902850609,"Mistry, Sood and Brahmbhatt",Private Limited,Manufacturing,90,Verified,0,Red,Manipur,Jamnagar,1
+MSME_114691153,"Deshpande, Ramachandran and Bal",Partnership,Manufacturing,74,Verified,0,Red,Jharkhand,Ramagundam,2
+MSME_992927801,"Kunda, Dugal and Srinivas",LLP,Services,32,Verified,0,Green,Arunachal Pradesh,Raiganj,1
+MSME_041872725,Chandran-Pal,Private Limited,Services,97,Verified,0,Green,Karnataka,Kolhapur,3
+MSME_238114832,Kumar LLC,Partnership,Services,78,Verified,0,Green,Andhra Pradesh,Gurgaon,3
+MSME_337167396,Parikh LLC,Proprietorship,Wholesale,96,Verified,0,Green,Maharashtra,Kishanganj,3
+MSME_867900215,"Sant, Konda and Roy",Partnership,Retail,44,Verified,0,Green,Tripura,Pallavaram,2
+MSME_877019536,Walia-Dhar,Proprietorship,Manufacturing,113,Verified,0,Green,Odisha,Panipat,2
+MSME_119934502,Pradhan-Iyer,LLP,B2B Software,29,Verified,0,Green,Himachal Pradesh,New Delhi,2
+MSME_680972097,Guha Ltd,Proprietorship,Manufacturing,119,Verified,0,Amber,West Bengal,Jalna,1
+MSME_466644817,"Chaudhuri, Thaman and Chandran",Partnership,Retail,85,Verified,0,Green,Jharkhand,Nagaon,2
+MSME_885123157,Mukherjee-Shetty,LLP,Services,52,Verified,0,Amber,Maharashtra,Bhimavaram,1
+MSME_230053650,Dalal-Chopra,Proprietorship,Services,87,Verified,0,Green,Bihar,Rohtak,1
+MSME_648737137,Gandhi and Sons,LLP,Retail,87,Pending,0,Amber,Himachal Pradesh,Imphal,1
+MSME_886018869,"Raju, Srinivas and Kibe",LLP,Retail,32,Verified,0,Red,Gujarat,Phagwara,2
