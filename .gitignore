@@ -1,44 +1,46 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+*.pyo
+*.pyd
 
-# C extensions
-*.so
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
 
-# Environments
-.env
+# Virtual Environments
 .venv/
-env/
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
 
-# Unit test / coverage reports
+# Python packages and libraries
 .pytest_cache/
-.cache/
-.coverage
-.coverage.*
-htmlcov/
 .tox/
-.nox/
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-cover/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
 
-# Editor / IDE settings
+# Editor and OS files
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# OS metadata
 .DS_Store
 Thumbs.db
+
+# ──────────────────────────────────────────────────────────────
+# Machine Learning Pipeline Artifacts
+# ──────────────────────────────────────────────────────────────
+
+# Ignore generated datasets and intermediate features
+data/
+
+# Ignore serialized models, scalers, and training metrics
+saved_models/
+
+# Ignore any generated plots or reports
+plots/
+*.png
+*.jpg
+*.html
+
