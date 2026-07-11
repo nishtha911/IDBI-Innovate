@@ -1,37 +1,72 @@
-# FinPulse 💳🌱
+# FinSight (Temporary Name)
 
-### AI/ML-Driven Financial Health Card for MSMEs
-**IDBI Innovate 2026 | Track 03: Financial Inclusion, Digital Lending & Credit Decisioning**
+AI-powered Financial Health Card for MSMEs
 
----
+## Problem Statement
 
-## 📋 Executive Summary
+Traditional MSME credit evaluation depends heavily on credit history and financial statements. Many New-to-Credit (NTC) and New-to-Bank (NTB) businesses lack these records despite having healthy financial activity.
 
-**FinPulse** is a credit assessment engine designed to replace traditional, collateral-heavy credit scoring for MSMEs. By aggregating multi-source alternative data ecosystems (GST, UPI, Account Aggregator, and EPFO), FinPulse computes a multidimensional **Financial Health Score (0-100)** delivered via high-performance APIs.
-
-* **The Problem:** Over 50% of viable MSMEs in India are rejected due to their "credit-invisible" or "New-to-Credit" status under archaic lending frameworks.
-* **The Solution:** A unified, real-time assessment API engine that translates alternative transaction behavior into reliable, explainable risk markers for instantaneous lending decisions.
-* **The Impact:** Reduces false rejections by 90%, enables near real-time decisioning (<30s), and expands access to an unmapped ₹5 Lakh Crore credit market.
+Our solution combines alternate financial data sources such as GST, UPI, EPFO and Bank Statements to generate an explainable Financial Health Score that assists banks in making faster and more inclusive lending decisions.
 
 ---
 
-## 🏗️ Technical Architecture
+## Features
 
-```text
-[ Alternative Data Sources ]
-(GSTN, NPCI, EPFO, Open Banking APIs)
-             │
-             ▼
-┌───────────────────────────┐
-│     Data Ingestion Layer  │ ──► Schema Normalization & Validation
-└───────────────────────────┘
-             │
-             ▼
-┌───────────────────────────┐
-│   FinPulse Scoring Engine │ ──► Feature Engineering (Pandas / Polars)
-└───────────────────────────┘ ──► Risk Classification Model (XGBoost)
-             │
-             ▼
-┌───────────────────────────┐
-│        Decision API       │ ──► FastAPI REST Endpoint (POST /api/v1/score)
-└───────────────────────────┘ ──► Returns Full Diagnostic Health Card Payload
+- Financial Health Score (0–100)
+- Green / Amber / Red Risk Classification
+- Explainable Score Breakdown
+- Dashboard for Loan Officers
+- REST API for Score Generation
+
+---
+
+## Tech Stack
+
+### Frontend
+- React
+- Vite
+- Tailwind CSS
+- Chart.js / Recharts
+
+### Backend
+- FastAPI
+- Python
+
+### ML
+- Pandas
+- Scikit-learn / XGBoost
+
+### Database
+- PostgreSQL
+
+---
+
+## Team
+
+| Member | Responsibility |
+|---------|----------------|
+| Soham | Dataset & Data Preparation |
+| Tanay | Backend (FastAPI, APIs, Database) |
+| Nishtha | Frontend (React + Vite) |
+| Ayaan | Machine Learning + Documentation |
+
+---
+
+## Folder Structure
+
+```
+project/
+│
+├── frontend/
+├── backend/
+├── ml/
+├── datasets/
+├── docs/
+└── README.md
+```
+
+---
+
+## Development Flow
+
+Dataset → ML Model → Backend API → Frontend Dashboard → Final Testing
