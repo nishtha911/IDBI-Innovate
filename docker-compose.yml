@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: idbi-credit-score-api:latest
+    container_name: idbi_credit_score_api
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=IDBI Innovate Financial Health Card API
+      - ENV=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - ENABLE_MOCK_DELAY=true
+      - MOCK_DELAY_SECONDS=0.5
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
