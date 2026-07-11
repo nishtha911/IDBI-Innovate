@@ -3,7 +3,7 @@ version: '3.8'
 services:
   api:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     image: idbi-credit-score-api:latest
     container_name: idbi_credit_score_api
