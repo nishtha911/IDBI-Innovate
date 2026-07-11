@@ -1,0 +1,32 @@
+# Version control
+.git
+.gitignore
+
+# Python caches and virtualenvs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment files
+.env
+.env.*
+
+# Temporary extraction files & proposals
+read_docx_temp.py
+proposal_text.txt
+*.docx
+
+# Docker config files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
