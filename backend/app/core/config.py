@@ -17,6 +17,6 @@ class Settings(BaseSettings):
     )
     MOCK_DELAY_SECONDS: float = 0.5
     
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
 
 settings = Settings()
