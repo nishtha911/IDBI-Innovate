@@ -18,7 +18,7 @@ class NpEncoder(json.JSONEncoder):
         return super(NpEncoder, self).default(obj)
     
 # Configuration
-NUM_MSMES = 100
+NUM_MSMES = 1000
 MONTHS_OF_HISTORY = 24
 CURRENT_DATE = datetime(2026, 7, 1) # Aligning with your project timeline
 
