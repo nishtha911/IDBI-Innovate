@@ -10,6 +10,7 @@ from app.services.epfo import EPFOService
 from app.services.bank import BankService
 from app.services.base import ServiceError
 from app.core.scoring import ScoringEngine
+from app.core.config import settings
 
 router = APIRouter()
 
@@ -104,9 +105,45 @@ async def get_msme_score(request: ScoreRequest):
         upi_data = upi_data or {"total_transactions": 0, "total_volume": 0.0, "monthly_metrics": [], "velocity_score": 1.0}
         epfo_data = epfo_data or {"history": []}
 
+    score_res: Dict[str, Any] = {}
+    
     # 2. Calculation Phase
     try:
-        score_res = ScoringEngine.calculate_score(gst_data, upi_data, epfo_data, bank_data)
+        if settings.USE_ML_MODEL:
+            from ml.predict import predict
+            
+            # Combine raw data into a unified dictionary for prediction
+            unified_data = {
+                "gst": gst_data,
+                "upi": upi_data,
+                "epfo": epfo_data,
+                "bank": bank_data
+            }
+            
+            ml_res = predict(unified_data)
+            
+            # Map ML prediction results to API format
+            # Map top_risk_factors to reason_codes
+            reason_codes = []
+            for trf in ml_res.get("top_risk_factors", []):
+                reason_codes.append({
+                    "code": trf["feature"].upper(),
+                    "type": trf["direction"],
+                    "impact": round(trf["shap_value"] * 100.0, 2),
+                    "text": f"{trf['display_name']} is a key driver contributing {trf['direction']}ly."
+                })
+                
+            score_res = {
+                "composite_score": ml_res["composite_score"],
+                "category": ml_res["category"],
+                "recommendation": ml_res["recommendation"],
+                "confidence_score": ml_res["confidence_score"],
+                "recommended_credit_limit_inr": ml_res["recommended_credit_limit_inr"],
+                "breakdown": ml_res["breakdown"],
+                "reason_codes": reason_codes
+            }
+        else:
+            score_res = ScoringEngine.calculate_score(gst_data, upi_data, epfo_data, bank_data)
     except Exception as e:
         raise HTTPException(
             status_code=500,

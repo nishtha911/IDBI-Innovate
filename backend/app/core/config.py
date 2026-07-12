@@ -17,6 +17,11 @@ class Settings(BaseSettings):
     )
     MOCK_DELAY_SECONDS: float = 0.5
     
+    USE_ML_MODEL: bool = Field(
+        default=True, 
+        description="Use the trained ML model for credit scoring instead of the rules-based engine"
+    )
+    
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")
 
 settings = Settings()

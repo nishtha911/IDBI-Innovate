@@ -37,9 +37,12 @@ def _get_shap_explainer(model: Any) -> Any:
 
     # If it's a calibrated model, extract the base estimator
     base_model = model
-    if hasattr(model, "estimators_"):
-        # CalibratedClassifierCV wraps multiple calibrated classifiers
-        # Use the first base estimator for SHAP
+    if hasattr(model, "calibrated_classifiers_"):
+        try:
+            base_model = model.calibrated_classifiers_[0].estimator
+        except (AttributeError, IndexError):
+            base_model = model
+    elif hasattr(model, "estimators_"):
         try:
             base_model = model.estimators_[0].estimator
         except (AttributeError, IndexError):

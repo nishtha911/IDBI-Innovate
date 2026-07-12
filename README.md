@@ -68,6 +68,25 @@ graph TD
 
 ---
 
+## 🤖 Machine Learning Pipeline & Integration
+
+In addition to the default rules-based rubric, the project features an advanced **Machine Learning credit-scoring pipeline** located in the `ml/` directory.
+
+### ML Component Map
+* 📂 [ml/](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml) — Machine Learning modules
+  * 📄 [preprocessing.py](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml/preprocessing.py) — Ingests raw MSME profiles, GST, UPI, and EPFO datasets, cleans data, handles outliers, and joins them into a unified feature set.
+  * 📄 [feature_engineering.py](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml/feature_engineering.py) — Performs category encoding, drops zero-variance and highly correlated features, scales the feature vector, and exports scaling metadata.
+  * 📄 [train.py](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml/train.py) — End-to-end training module. Runs hyperparameter optimization via `optuna` for both XGBoost and LightGBM models, selects the best performer, applies Isotonic probability calibration, and saves the final models.
+  * 📄 [predict.py](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml/predict.py) — Integrates with the backend. Exposes a `predict(data)` method that aligns raw nested request JSONs with model features, applies the scaler, runs inference, and computes the probability-weighted score.
+  * 📄 [explain.py](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/ml/explain.py) — Utilizes **SHAP (SHapley Additive exPlanations)** to extract the top-K driving features for each prediction, generating mathematical explainability reports.
+
+### Configuration & Hybrid Mode
+The backend can toggle between the Machine Learning model and the rules-based rubric. This is managed via the `USE_ML_MODEL` environment variable (defined in `.env` and `config.py`):
+* **`USE_ML_MODEL=True` (Default)**: Uses the trained XGBoost/LightGBM model and SHAP explainability to compute scores.
+* **`USE_ML_MODEL=False`**: Uses the rules-based scoring engine as a robust fallback.
+
+---
+
 ## 📊 Pre-configured Test Profiles
 
 The system comes pre-configured with several profiles inside the [MockDataStore](file:///c:/Users/LENOVO/Desktop/IDBI%20innovate/app/services/mock_data_store.py#L472) to test various scoring scenarios:
@@ -103,10 +122,19 @@ The system comes pre-configured with several profiles inside the [MockDataStore]
 
 3. **Install the dependencies**:
    ```bash
+   # Install backend dependencies
    pip install -r requirements.txt
+   # Install ML dependencies
+   pip install -r ml/requirements.txt
    ```
 
-4. **Run the FastAPI server**:
+4. **Train the ML model (Required if `USE_ML_MODEL=True`)**:
+   Before starting the server, run the training script to generate the model and scaling artifacts:
+   ```bash
+   .venv\Scripts\python -m ml.train
+   ```
+
+5. **Run the FastAPI server**:
    ```bash
    uvicorn app.main:app --reload
    ```

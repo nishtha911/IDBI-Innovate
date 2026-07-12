@@ -83,7 +83,7 @@ def split_data(
     X_train, X_test, y_train, y_test
     """
     X = df[feature_cols].values
-    y = df[config.TARGET_COLUMN].values
+    y = df[config.TARGET_COLUMN].to_numpy().astype(int)
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y,
@@ -157,7 +157,7 @@ def _create_xgb_objective(X_train, y_train, sample_weights):
             model, X_train, y_train,
             cv=cv,
             scoring="f1_macro",
-            fit_params={"sample_weight": sample_weights},
+            params={"sample_weight": sample_weights},  # type: ignore
         )
         return scores.mean()
 
@@ -210,7 +210,7 @@ def _create_lgbm_objective(X_train, y_train, sample_weights):
             model, X_train, y_train,
             cv=cv,
             scoring="f1_macro",
-            fit_params={"sample_weight": sample_weights},
+            params={"sample_weight": sample_weights},  # type: ignore
         )
         return scores.mean()
 
@@ -308,7 +308,7 @@ def train_lightgbm(
         "verbose": -1,
     }
 
-    model = lgb.LGBMClassifier(**params)
+    model = lgb.LGBMClassifier(**params)  # type: ignore
     model.fit(X_train, y_train, sample_weight=sample_weights)
     return model
 
@@ -371,11 +371,11 @@ def evaluate_model(
 
     metrics = {
         "model_name": model_name,
-        "accuracy": round(accuracy, 4),
-        "macro_f1": round(macro_f1, 4),
-        "weighted_f1": round(weighted_f1, 4),
-        "log_loss": round(logloss, 4),
-        "roc_auc_ovr": round(roc_auc, 4),
+        "accuracy": round(float(accuracy), 4),
+        "macro_f1": round(float(macro_f1), 4),
+        "weighted_f1": round(float(weighted_f1), 4),
+        "log_loss": round(float(logloss), 4),
+        "roc_auc_ovr": round(float(roc_auc), 4),
         "classification_report": report,
         "confusion_matrix": cm,
     }
@@ -419,7 +419,7 @@ def run_training() -> Dict[str, Any]:
     X_train, X_test, y_train, y_test = split_data(df, feature_cols)
 
     # Compute sample weights
-    y_train_series = pd.Series(y_train)
+    y_train_series = pd.Series(list(y_train))
     sample_weights = get_sample_weights(y_train_series)
 
     # ── Train XGBoost ──
