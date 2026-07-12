@@ -11,6 +11,15 @@ from app.services.bank import BankService
 from app.services.base import ServiceError
 from app.core.scoring import ScoringEngine
 from app.core.config import settings
+# pyrefly: ignore [missing-import]
+from groq import Groq
+
+# Instantiate Groq client if key exists
+try:
+    groq_client = Groq(api_key=settings.GROQ_API_KEY) if settings.GROQ_API_KEY else None
+except Exception as e:
+    print(f"Groq initialization failed: {e}")
+    groq_client = None
 
 router = APIRouter()
 
@@ -150,6 +159,28 @@ async def get_msme_score(request: ScoreRequest):
             detail=f"Scoring engine error: {str(e)}"
         )
         
+    # 3. LLM Integration
+    ai_summary = None
+    if groq_client:
+        try:
+            prompt = f"""
+            Write a short, professional, 2-3 sentence summary explaining the financial health of an MSME based on the following:
+            Score: {score_res['composite_score']} (out of 100)
+            Risk Category: {score_res['category']}
+            Recommendation: {score_res['recommendation']}
+            """
+            chat_completion = groq_client.chat.completions.create(
+                messages=[
+                    {"role": "system", "content": "You are a senior credit risk analyst."},
+                    {"role": "user", "content": prompt}
+                ],
+                model="llama-3.1-8b-instant",
+            )
+            ai_summary = chat_completion.choices[0].message.content
+        except Exception as e:
+            print(f"Failed to fetch Groq summary: {e}")
+            ai_summary = "Failed to generate AI summary due to API error."
+            
     # Format and return Pydantic model
     return ScoreResponse(
         msme_id=msme_id,
@@ -160,7 +191,8 @@ async def get_msme_score(request: ScoreRequest):
         recommended_credit_limit_inr=score_res["recommended_credit_limit_inr"],
         breakdown=ScoreBreakdown(**score_res["breakdown"]),
         reason_codes=[ReasonCode(**rc) for rc in score_res["reason_codes"]],
-        api_audit_logs=audit_logs
+        api_audit_logs=audit_logs,
+        ai_summary=ai_summary
     )
 
 @router.get("/health", response_model=HealthResponse)

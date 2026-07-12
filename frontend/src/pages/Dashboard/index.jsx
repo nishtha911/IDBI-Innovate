@@ -1,15 +1,36 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Users, FileWarning, ShieldAlert, TrendingUp, ArrowUpRight, ArrowDownRight, Briefcase, FileText, AlertTriangle, CheckCircle, Clock, FilePlus2 } from 'lucide-react';
 import { MetricCard } from '../../components/common/MetricCard';
 import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { getDashboardMetrics } from '../../services/assessments';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from 'recharts';
 import clsx from 'clsx';
-import html2pdf from 'html2pdf.js';
+import generatePDF from 'react-to-pdf';  // kept for reference
+// eslint-disable-next-line no-unused-vars
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const handleExportPDF = async () => {
+    const html2pdf = (await import('html2pdf.js')).default;
+    const element = document.getElementById('dashboard-content');
+    html2pdf()
+      .set({
+        margin: 8,
+        filename: 'Dashboard_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+      })
+      .from(element)
+      .save();
+  };
+  
+
+
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -47,17 +68,8 @@ const Dashboard = () => {
     { name: 'IT/Tech', val: 10 }
   ];
 
-  const handleExportPDF = () => {
-    const element = document.getElementById('dashboard-content');
-    const opt = {
-      margin: 0.5,
-      filename: `Dashboard_Report.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-    };
-    html2pdf().set(opt).from(element).save();
-  };
+
+
 
   return (
     <div className="space-y-4 max-w-full" id="dashboard-content">
@@ -264,20 +276,20 @@ const Dashboard = () => {
               <span className="text-sm font-bold text-gray-800">Quick Actions</span>
             </CardHeader>
             <CardContent className="p-3 grid grid-cols-2 gap-2">
-              <button className="bg-gray-50 border border-gray-200 hover:border-finsight-teal rounded text-xs p-2 text-center transition-colors">
-                <FilePlus2 size={16} className="mx-auto mb-1 text-gray-500" />
+              <button onClick={() => navigate('/assessment/new')} className="bg-gray-50 border border-gray-200 hover:border-finsight-teal hover:bg-finsight-lightTeal rounded text-xs p-2 text-center transition-colors">
+                <FilePlus2 size={16} className="mx-auto mb-1 text-finsight-teal" />
                 <span className="font-medium text-gray-700">New Run</span>
               </button>
-              <button className="bg-gray-50 border border-gray-200 hover:border-finsight-teal rounded text-xs p-2 text-center transition-colors">
-                <Users size={16} className="mx-auto mb-1 text-gray-500" />
+              <button onClick={() => navigate('/assessment/new')} className="bg-gray-50 border border-gray-200 hover:border-finsight-teal hover:bg-finsight-lightTeal rounded text-xs p-2 text-center transition-colors">
+                <Users size={16} className="mx-auto mb-1 text-finsight-teal" />
                 <span className="font-medium text-gray-700">Batch Upload</span>
               </button>
-              <button className="bg-gray-50 border border-gray-200 hover:border-finsight-teal rounded text-xs p-2 text-center transition-colors">
-                <FileText size={16} className="mx-auto mb-1 text-gray-500" />
+              <button onClick={() => navigate('/reports')} className="bg-gray-50 border border-gray-200 hover:border-finsight-teal hover:bg-finsight-lightTeal rounded text-xs p-2 text-center transition-colors">
+                <FileText size={16} className="mx-auto mb-1 text-finsight-teal" />
                 <span className="font-medium text-gray-700">MIS Report</span>
               </button>
-              <button className="bg-gray-50 border border-gray-200 hover:border-finsight-teal rounded text-xs p-2 text-center transition-colors">
-                <Briefcase size={16} className="mx-auto mb-1 text-gray-500" />
+              <button onClick={() => navigate('/profile')} className="bg-gray-50 border border-gray-200 hover:border-finsight-teal hover:bg-finsight-lightTeal rounded text-xs p-2 text-center transition-colors">
+                <Briefcase size={16} className="mx-auto mb-1 text-finsight-teal" />
                 <span className="font-medium text-gray-700">Portfolio</span>
               </button>
             </CardContent>

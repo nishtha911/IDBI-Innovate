@@ -18,8 +18,13 @@ class Settings(BaseSettings):
     MOCK_DELAY_SECONDS: float = 0.5
     
     USE_ML_MODEL: bool = Field(
-        default=True, 
+        default=False, 
         description="Use the trained ML model for credit scoring instead of the rules-based engine"
+    )
+    
+    GROQ_API_KEY: str | None = Field(
+        default=None,
+        description="Groq API key for LLM integration"
     )
     
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True, extra="ignore")

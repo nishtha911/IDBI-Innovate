@@ -102,7 +102,7 @@ const Sidebar = () => {
             </div>
           </div>
         )}
-        <button className="flex items-center gap-3 px-3 py-2 w-full text-left text-gray-200 hover:text-white hover:bg-finsight-darkTeal rounded-md transition-colors text-sm">
+        <button onClick={() => window.location.href = '/login'} className="flex items-center gap-3 px-3 py-2 w-full text-left text-gray-200 hover:text-white hover:bg-finsight-darkTeal rounded-md transition-colors text-sm">
           <LogOut size={18} className="shrink-0 text-finsight-orange" />
           {sidebarOpen && <span className="font-medium">Secure Logout</span>}
         </button>

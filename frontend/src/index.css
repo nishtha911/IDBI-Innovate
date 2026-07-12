@@ -10,6 +10,9 @@
 
 @layer base {
   body {
-    @apply bg-finsight-beige text-gray-800 antialiased;
+    background-color: var(--color-finsight-beige);
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

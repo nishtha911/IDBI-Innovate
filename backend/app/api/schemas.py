@@ -41,6 +41,7 @@ class ScoreResponse(BaseModel):
     breakdown: ScoreBreakdown = Field(..., description="Component-level credit score breakdown")
     reason_codes: List[ReasonCode] = Field(..., description="Explainability reasons lists")
     api_audit_logs: List[ServiceAuditLog] = Field(..., description="Logs from upstream integration fetches")
+    ai_summary: Optional[str] = Field(None, description="Human readable AI summary from Groq")
 
 class HealthResponse(BaseModel):
     status: str

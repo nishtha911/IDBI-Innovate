@@ -2,17 +2,21 @@ import { Menu, Bell, UserCircle, Search, Globe, ChevronDown, Phone, Mail } from 
 import useAppStore from '../../store/useAppStore';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 const Navbar = () => {
   const toggleSidebar = useAppStore((state) => state.toggleSidebar);
   const user = useAppStore((state) => state.user);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('Corporate');
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate('/history');
+      navigate(`/history?search=${encodeURIComponent(searchQuery)}`);
       setSearchQuery('');
     }
   };
@@ -22,13 +26,18 @@ const Navbar = () => {
       {/* Top Utility Bar (Very Dense) */}
       <div className="h-8 bg-finsight-darkTeal text-white text-xs flex items-center justify-between px-4">
         <div className="flex items-center gap-4">
-          <span className="hover:text-finsight-orange cursor-pointer transition-colors">Personal</span>
-          <span className="text-gray-400">|</span>
-          <span className="hover:text-finsight-orange cursor-pointer transition-colors font-semibold">Corporate</span>
-          <span className="text-gray-400">|</span>
-          <span className="hover:text-finsight-orange cursor-pointer transition-colors">NRI</span>
-          <span className="text-gray-400">|</span>
-          <span className="hover:text-finsight-orange cursor-pointer transition-colors">Investor Relations</span>
+          {['Personal', 'Corporate', 'NRI', 'Investor Relations'].map((tab) => (
+            <span 
+              key={tab} 
+              onClick={() => setActiveTab(tab)}
+              className={clsx(
+                "cursor-pointer transition-colors flex items-center gap-2",
+                activeTab === tab ? "text-finsight-orange font-semibold" : "hover:text-finsight-orange text-gray-300"
+              )}
+            >
+              {tab}
+            </span>
+          ))}
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1 hover:text-finsight-orange cursor-pointer transition-colors">
@@ -75,18 +84,50 @@ const Navbar = () => {
           </form>
         </div>
 
-        <div className="flex items-center gap-4">
-          <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative">
+        <div className="flex items-center gap-4 relative">
+          <button 
+            onClick={() => setShowNotifications(!showNotifications)}
+            className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative"
+          >
             <Bell size={20} />
             <span className="absolute top-1 right-1 w-2 h-2 bg-finsight-orange rounded-full"></span>
           </button>
           
-          <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
+          {showNotifications && (
+            <div className="absolute top-12 right-12 w-64 bg-white border border-gray-200 shadow-lg rounded-md py-2 z-20">
+              <p className="px-4 py-2 text-xs font-semibold border-b border-gray-100">Notifications</p>
+              <div className="px-4 py-3 text-sm text-gray-600 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                <p className="font-medium text-gray-800">API Alert</p>
+                <p className="text-xs">GSTIN latency &gt; 2s</p>
+              </div>
+              <div className="px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+                <p className="font-medium text-gray-800">New Report</p>
+                <p className="text-xs">Assessment 10234 is ready</p>
+              </div>
+            </div>
+          )}
+          
+          <div className="flex items-center gap-3 border-l border-gray-200 pl-4 relative">
             <div className="text-right hidden sm:block leading-tight">
               <p className="text-sm font-semibold text-gray-800">{user.name}</p>
               <p className="text-[10px] uppercase font-bold tracking-wider text-finsight-teal">{user.role}</p>
             </div>
-            <UserCircle size={32} className="text-gray-400 cursor-pointer hover:text-finsight-teal transition-colors" />
+            <UserCircle 
+              size={32} 
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+              className="text-gray-400 cursor-pointer hover:text-finsight-teal transition-colors" 
+            />
+            {showProfileMenu && (
+              <div className="absolute top-10 right-0 w-48 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-20">
+                <div className="px-4 py-2 border-b border-gray-100">
+                  <p className="text-sm font-semibold text-gray-800">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.email || 'user@idbi.com'}</p>
+                </div>
+                <button onClick={() => { setShowProfileMenu(false); navigate('/profile'); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Profile</button>
+                <button onClick={() => { setShowProfileMenu(false); navigate('/settings'); }} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Settings</button>
+                <button onClick={() => { setShowProfileMenu(false); navigate('/login'); }} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">Logout</button>
+              </div>
+            )}
           </div>
         </div>
       </header>

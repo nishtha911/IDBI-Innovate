@@ -8,9 +8,10 @@ import { useDropzone } from 'react-dropzone';
 const NewAssessment = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    business_pan: '',
+    business_name: '',
     gstin: '',
     bank_account_number: '',
     ifsc_code: '',
@@ -39,18 +40,16 @@ const NewAssessment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     try {
-      // In a real app, we'd send files too. The backend currently expects a JSON with PAN, GSTIN etc.
-      // But based on our mocked backend, the endpoint is /score/evaluate taking bank_statement.
-      // We will just mock the submit for now and redirect to a random id like /assessment/123
-      // const response = await submitAssessment(formData);
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      navigate(`/assessment/${Math.floor(Math.random() * 1000)}`);
-    } catch (error) {
-      console.error("Submission failed", error);
+      // Backend expects { msme_id }, use gstin as the MSME identifier
+      const payload = { msme_id: formData.gstin || formData.business_name };
+      const response = await submitAssessment(payload);
+      navigate(`/assessment/${response.msme_id}`, { state: { result: response } });
+    } catch (err) {
+      const msg = err?.response?.data?.detail || 'Assessment failed. Please try again.';
+      setError(msg);
+      console.error('Submission failed', err);
     } finally {
       setLoading(false);
     }
@@ -63,21 +62,27 @@ const NewAssessment = () => {
         <p className="text-gray-500">Enter business details to generate a health score.</p>
       </div>
 
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+          <strong>Error:</strong> {error}
+        </div>
+      )}
+
       <Card>
         <CardHeader>Business Information</CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Business PAN</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Business Name / MSME ID</label>
                 <input 
                   required
                   type="text" 
-                  name="business_pan"
-                  value={formData.business_pan}
+                  name="business_name"
+                  value={formData.business_name}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
-                  placeholder="e.g. ABCDE1234F" 
+                  placeholder="e.g. raj_vendor" 
                 />
               </div>
               <div>

@@ -9,11 +9,13 @@ import Analytics from './pages/Analytics';
 import Profile from './pages/Profile';
 import Reports from './pages/Reports';
 import Support from './pages/Support';
+import Login from './pages/Login';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />

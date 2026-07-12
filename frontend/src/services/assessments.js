@@ -1,7 +1,7 @@
 import api from './api';
 
 export const submitAssessment = async (data) => {
-  const response = await api.post('/score/evaluate', data);
+  const response = await api.post('/score', data);
   return response.data;
 };
 

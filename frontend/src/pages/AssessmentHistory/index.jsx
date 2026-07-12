@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardHeader, CardContent } from '../../components/common/Card';
-import { Search, Filter, ChevronRight } from 'lucide-react';
+import { Search, Filter, ChevronRight, Check } from 'lucide-react';
 import clsx from 'clsx';
 
 const mockHistory = [
@@ -14,11 +14,23 @@ const mockHistory = [
 
 const AssessmentHistory = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
+  const [filterRisk, setFilterRisk] = useState('All');
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
-  const filteredHistory = mockHistory.filter(item => 
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.includes(searchTerm)
-  );
+  useEffect(() => {
+    const search = searchParams.get('search');
+    if (search !== null) {
+      setSearchTerm(search);
+    }
+  }, [searchParams]);
+
+  const filteredHistory = mockHistory.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.includes(searchTerm);
+    const matchesRisk = filterRisk === 'All' || item.risk === filterRisk;
+    return matchesSearch && matchesRisk;
+  });
 
   return (
     <div className="space-y-6">
@@ -39,10 +51,33 @@ const AssessmentHistory = () => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-finsight-teal focus:border-finsight-teal outline-none"
             />
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
-            <Filter size={18} />
-            Filter
-          </button>
+          <div className="relative">
+            <button 
+              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <Filter size={18} />
+              {filterRisk === 'All' ? 'Filter' : `Risk: ${filterRisk}`}
+            </button>
+            {showFilterDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 py-1">
+                {['All', 'Green', 'Amber', 'Red'].map(risk => (
+                  <button
+                    key={risk}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center justify-between"
+                    onClick={() => { setFilterRisk(risk); setShowFilterDropdown(false); }}
+                  >
+                    <span className={clsx(
+                      risk === 'Green' ? 'text-green-600' :
+                      risk === 'Amber' ? 'text-amber-600' :
+                      risk === 'Red' ? 'text-red-600' : 'text-gray-700'
+                    )}>{risk}</span>
+                    {filterRisk === risk && <Check size={14} className="text-finsight-teal" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
