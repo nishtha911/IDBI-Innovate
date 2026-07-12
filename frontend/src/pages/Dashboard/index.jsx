@@ -1,36 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, FileWarning, ShieldAlert, TrendingUp, ArrowUpRight, ArrowDownRight, Briefcase, FileText, AlertTriangle, CheckCircle, Clock, FilePlus2 } from 'lucide-react';
+import { Users, FileWarning, ShieldAlert, TrendingUp, Briefcase, FileText, AlertTriangle, CheckCircle, Clock, FilePlus2 } from 'lucide-react';
 import { MetricCard } from '../../components/common/MetricCard';
 import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { getDashboardMetrics } from '../../services/assessments';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend, Cell, PieChart, Pie } from 'recharts';
 import clsx from 'clsx';
-import generatePDF from 'react-to-pdf';  // kept for reference
-// eslint-disable-next-line no-unused-vars
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const handleExportPDF = async () => {
-    const html2pdf = (await import('html2pdf.js')).default;
-    const element = document.getElementById('dashboard-content');
-    html2pdf()
-      .set({
-        margin: 8,
-        filename: 'Dashboard_Report.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-      })
-      .from(element)
-      .save();
-  };
-  
-
-
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -38,13 +21,37 @@ const Dashboard = () => {
         const data = await getDashboardMetrics();
         setMetrics(data);
       } catch (error) {
-        console.error("Failed to load metrics", error);
+        console.error('Failed to load metrics', error);
       } finally {
         setLoading(false);
       }
     };
     fetchMetrics();
   }, []);
+
+  const handleExportPDF = () => {
+    const element = document.getElementById('dashboard-content');
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Dashboard Report - FinSight</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 0; padding: 16px; font-size: 12px; color: #1f2937; }
+            * { box-sizing: border-box; }
+          </style>
+        </head>
+        <body>${element.innerHTML}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
+  };
 
   if (loading) {
     return (
@@ -58,18 +65,8 @@ const Dashboard = () => {
   const riskData = [
     { name: 'Low Risk', value: 400, color: '#10B981' },
     { name: 'Medium Risk', value: 300, color: '#F59E0B' },
-    { name: 'High Risk', value: 150, color: '#EF4444' }
+    { name: 'High Risk', value: 150, color: '#EF4444' },
   ];
-
-  const sectorData = [
-    { name: 'Manufacturing', val: 40 },
-    { name: 'Retail', val: 30 },
-    { name: 'Services', val: 20 },
-    { name: 'IT/Tech', val: 10 }
-  ];
-
-
-
 
   return (
     <div className="space-y-4 max-w-full" id="dashboard-content">
@@ -87,59 +84,38 @@ const Dashboard = () => {
       <div className="flex justify-between items-end border-b border-gray-200 pb-2">
         <div>
           <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Executive Dashboard</h1>
-          <p className="text-xs text-gray-500 font-medium">Portfolio Overview & Risk Assessment Metrics</p>
+          <p className="text-xs text-gray-500 font-medium">Portfolio Overview &amp; Risk Assessment Metrics</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={handleExportPDF} className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 text-gray-700 font-medium transition-colors">Export PDF</button>
-          <button className="text-xs bg-finsight-teal text-white px-3 py-1.5 rounded-md hover:bg-finsight-darkTeal font-medium transition-colors shadow-sm">Generate Report</button>
+          <button
+            onClick={handleExportPDF}
+            disabled={exporting}
+            className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 text-gray-700 font-medium transition-colors disabled:opacity-60"
+          >
+            {exporting ? 'Exporting...' : 'Export PDF'}
+          </button>
+          <button
+            onClick={handleExportPDF}
+            disabled={exporting}
+            className="text-xs bg-finsight-teal text-white px-3 py-1.5 rounded-md hover:bg-finsight-darkTeal font-medium transition-colors shadow-sm disabled:opacity-60"
+          >
+            {exporting ? 'Generating...' : 'Generate Report'}
+          </button>
         </div>
       </div>
 
       {/* Dense Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-        <MetricCard
-          title="Total Assessments"
-          value={metrics?.totalAssessments || "12,450"}
-          icon={Briefcase}
-          trend="up"
-          trendLabel="+12.4% MoM"
-          colorClass="text-finsight-teal bg-finsight-lightTeal"
-        />
-        <MetricCard
-          title="Avg Portfolio Score"
-          value={metrics?.avgScore || "68.4"}
-          icon={TrendingUp}
-          trend="up"
-          trendLabel="+3.2 points"
-          colorClass="text-blue-600 bg-blue-50"
-        />
-        <MetricCard
-          title="High Risk Entities"
-          value={metrics?.highRisk || "142"}
-          icon={ShieldAlert}
-          trend="down"
-          trendLabel="-5.1% MoM"
-          colorClass="text-red-600 bg-red-50"
-        />
-        <MetricCard
-          title="Pending Reviews"
-          value="45"
-          icon={Clock}
-          colorClass="text-finsight-orange bg-orange-50"
-        />
-        <MetricCard
-          title="Automated Approvals"
-          value="89%"
-          icon={CheckCircle}
-          trend="up"
-          trendLabel="+2.1% efficiency"
-          colorClass="text-green-600 bg-green-50"
-        />
+        <MetricCard title="Total Assessments" value={metrics?.totalAssessments || '12,450'} icon={Briefcase} trend="up" trendLabel="+12.4% MoM" colorClass="text-finsight-teal bg-finsight-lightTeal" />
+        <MetricCard title="Avg Portfolio Score" value={metrics?.avgScore || '68.4'} icon={TrendingUp} trend="up" trendLabel="+3.2 points" colorClass="text-blue-600 bg-blue-50" />
+        <MetricCard title="High Risk Entities" value={metrics?.highRisk || '142'} icon={ShieldAlert} trend="down" trendLabel="-5.1% MoM" colorClass="text-red-600 bg-red-50" />
+        <MetricCard title="Pending Reviews" value="45" icon={Clock} colorClass="text-finsight-orange bg-orange-50" />
+        <MetricCard title="Automated Approvals" value="89%" icon={CheckCircle} trend="up" trendLabel="+2.1% efficiency" colorClass="text-green-600 bg-green-50" />
       </div>
 
       {/* Dense Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        
+
         {/* Left Column: Charts */}
         <div className="lg:col-span-8 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -149,11 +125,11 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent className="h-48 pt-4">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={metrics?.recentTrends || [{month: 'Jan', score: 65}, {month: 'Feb', score: 67}, {month: 'Mar', score: 68}]}>
+                  <LineChart data={metrics?.recentTrends || [{ month: 'Jan', score: 65 }, { month: 'Feb', score: 67 }, { month: 'Mar', score: 68 }, { month: 'Apr', score: 72 }, { month: 'May', score: 75 }]}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
                     <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 10 }} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 10 }} domain={['auto', 'auto']} />
-                    <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '4px' }}/>
+                    <RechartsTooltip contentStyle={{ fontSize: '12px', borderRadius: '4px' }} />
                     <Line type="monotone" dataKey="score" stroke="#008479" strokeWidth={2} dot={{ r: 3 }} />
                   </LineChart>
                 </ResponsiveContainer>
@@ -172,7 +148,7 @@ const Dashboard = () => {
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <RechartsTooltip contentStyle={{ fontSize: '12px' }}/>
+                    <RechartsTooltip contentStyle={{ fontSize: '12px' }} />
                     <Legend iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
                   </PieChart>
                 </ResponsiveContainer>
@@ -184,7 +160,7 @@ const Dashboard = () => {
           <Card className="shadow-sm border-gray-200">
             <CardHeader className="py-2.5 px-4 border-b bg-gray-50/50 flex justify-between items-center">
               <span className="text-sm font-bold text-gray-800">Recent Assessments Queue</span>
-              <a href="#" className="text-[10px] font-semibold text-finsight-teal hover:underline uppercase tracking-wider">View All</a>
+              <a href="/history" className="text-[10px] font-semibold text-finsight-teal hover:underline uppercase tracking-wider">View All</a>
             </CardHeader>
             <CardContent className="p-0">
               <div className="overflow-x-auto">
@@ -213,11 +189,10 @@ const Dashboard = () => {
                         <td className="px-4 py-2 font-medium text-gray-800">{item.name}</td>
                         <td className="px-4 py-2 text-gray-600">{item.sector}</td>
                         <td className="px-4 py-2">
-                          <span className={clsx("font-bold", item.score >= 75 ? "text-green-600" : item.score >= 50 ? "text-yellow-600" : "text-red-600")}>{item.score}</span>
+                          <span className={clsx('font-bold', item.score >= 75 ? 'text-green-600' : item.score >= 50 ? 'text-yellow-600' : 'text-red-600')}>{item.score}</span>
                         </td>
                         <td className="px-4 py-2">
-                          <span className={clsx(
-                            "text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider",
+                          <span className={clsx('text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider',
                             item.status === 'Approved' ? 'bg-green-100 text-green-700' :
                             item.status === 'Rejected' ? 'bg-red-100 text-red-700' :
                             'bg-yellow-100 text-yellow-700'
@@ -257,7 +232,7 @@ const Dashboard = () => {
                   <FileWarning size={16} className="text-finsight-orange mt-0.5 shrink-0" />
                   <div>
                     <p className="text-xs font-semibold text-gray-800 leading-tight">Manual Reviews Overdue</p>
-                    <p className="text-[10px] text-gray-500 mt-1">7 applications are pending analyst review &gt; 48hrs.</p>
+                    <p className="text-[10px] text-gray-500 mt-1">7 applications pending analyst review &gt; 48hrs.</p>
                   </div>
                 </li>
                 <li className="flex gap-3 items-start">

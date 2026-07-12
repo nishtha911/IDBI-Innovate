@@ -3,7 +3,7 @@ import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import clsx from 'clsx';
-// pdf import removed — using html2pdf.js dynamically
+
 
 const mockData = {
   score: 72,
@@ -54,19 +54,29 @@ const AssessmentResult = () => {
     data.riskCategory === 'Amber' ? 'text-amber-600 bg-amber-50 border-amber-200' :
     'text-red-600 bg-red-50 border-red-200';
   
-  const handleDownloadPDF = async () => {
-    const html2pdf = (await import('html2pdf.js')).default;
+  const handleDownloadPDF = () => {
     const element = document.getElementById('report-content');
-    html2pdf()
-      .set({
-        margin: 8,
-        filename: `Assessment_Report_${id}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      })
-      .from(element)
-      .save();
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Assessment Report ${id} - FinSight</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; font-size: 13px; color: #1f2937; }
+            * { box-sizing: border-box; }
+            button { display: none !important; }
+          </style>
+        </head>
+        <body>${element.innerHTML}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
   };
 
   return (
@@ -153,7 +163,6 @@ const AssessmentResult = () => {
             <div className="bg-white p-4 rounded-md border border-finsight-teal/20 shadow-sm">
               <p className="text-xs uppercase font-bold text-finsight-teal mb-2 flex items-center gap-2">
                 <span>AI Risk Analyst Summary</span>
-                <span className="bg-finsight-orange text-white px-1.5 py-0.5 rounded text-[10px]">GROQ POWERED</span>
               </p>
               <p className="text-gray-600 text-sm italic">"{data.ai_summary}"</p>
             </div>
