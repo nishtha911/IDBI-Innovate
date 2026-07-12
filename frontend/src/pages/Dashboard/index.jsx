@@ -5,6 +5,7 @@ import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { getDashboardMetrics } from '../../services/assessments';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, Legend, Cell, PieChart, Pie } from 'recharts';
 import clsx from 'clsx';
+import html2pdf from 'html2pdf.js';
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState(null);
@@ -46,8 +47,20 @@ const Dashboard = () => {
     { name: 'IT/Tech', val: 10 }
   ];
 
+  const handleExportPDF = () => {
+    const element = document.getElementById('dashboard-content');
+    const opt = {
+      margin: 0.5,
+      filename: `Dashboard_Report.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
-    <div className="space-y-4 max-w-full">
+    <div className="space-y-4 max-w-full" id="dashboard-content">
       {/* Ticker Banner */}
       <div className="bg-finsight-darkTeal text-white text-xs py-1.5 px-4 rounded-md shadow-sm flex items-center overflow-hidden">
         <span className="font-bold bg-finsight-orange text-white px-2 py-0.5 rounded text-[10px] uppercase tracking-wider mr-3 shrink-0">Live Updates</span>
@@ -65,7 +78,7 @@ const Dashboard = () => {
           <p className="text-xs text-gray-500 font-medium">Portfolio Overview & Risk Assessment Metrics</p>
         </div>
         <div className="flex gap-2">
-          <button className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 text-gray-700 font-medium transition-colors">Export PDF</button>
+          <button onClick={handleExportPDF} className="text-xs bg-white border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 text-gray-700 font-medium transition-colors">Export PDF</button>
           <button className="text-xs bg-finsight-teal text-white px-3 py-1.5 rounded-md hover:bg-finsight-darkTeal font-medium transition-colors shadow-sm">Generate Report</button>
         </div>
       </div>

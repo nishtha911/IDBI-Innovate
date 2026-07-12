@@ -3,6 +3,7 @@ import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import clsx from 'clsx';
+import html2pdf from 'html2pdf.js';
 
 const mockData = {
   score: 72,
@@ -33,14 +34,26 @@ const AssessmentResult = () => {
     mockData.riskCategory === 'Amber' ? 'text-amber-600 bg-amber-50 border-amber-200' :
     'text-red-600 bg-red-50 border-red-200';
 
+  const handleDownloadPDF = () => {
+    const element = document.getElementById('report-content');
+    const opt = {
+      margin: 0.5,
+      filename: `Assessment_Report_${id}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" id="report-content">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Assessment Report</h1>
           <p className="text-gray-500">ID: {id} • Generated on Oct 24, 2026</p>
         </div>
-        <button className="px-4 py-2 bg-finsight-teal text-white rounded-md font-medium hover:bg-finsight-darkTeal transition-colors">
+        <button onClick={handleDownloadPDF} className="px-4 py-2 bg-finsight-teal text-white rounded-md font-medium hover:bg-finsight-darkTeal transition-colors">
           Download PDF
         </button>
       </div>

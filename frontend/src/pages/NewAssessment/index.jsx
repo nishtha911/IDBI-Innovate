@@ -1,17 +1,35 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { submitAssessment } from '../../services/assessments';
 import { FileUp, Loader2 } from 'lucide-react';
+import { useDropzone } from 'react-dropzone';
 
 const NewAssessment = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
     business_pan: '',
     gstin: '',
     bank_account_number: '',
     ifsc_code: '',
+  });
+
+  const onDrop = useCallback(acceptedFiles => {
+    if (acceptedFiles.length > 0) {
+      setFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ 
+    onDrop,
+    accept: {
+      'application/pdf': ['.pdf'],
+      'text/csv': ['.csv'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
+    },
+    maxSize: 10485760 // 10MB
   });
 
   const handleChange = (e) => {
@@ -102,9 +120,12 @@ const NewAssessment = () => {
 
             <div className="pt-4 border-t border-gray-100">
               <label className="block text-sm font-medium text-gray-700 mb-2">Upload Bank Statement (Optional)</label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-gray-50 transition-colors">
-                <FileUp className="text-gray-400 mb-3" size={32} />
-                <p className="text-sm font-medium text-gray-700">Click to upload or drag and drop</p>
+              <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${isDragActive ? 'border-finsight-teal bg-finsight-teal/5' : 'border-gray-300 hover:bg-gray-50'}`}>
+                <input {...getInputProps()} />
+                <FileUp className={`${isDragActive ? 'text-finsight-teal' : 'text-gray-400'} mb-3`} size={32} />
+                <p className="text-sm font-medium text-gray-700">
+                  {file ? `Selected file: ${file.name}` : isDragActive ? "Drop the file here..." : "Click to upload or drag and drop"}
+                </p>
                 <p className="text-xs text-gray-500 mt-1">PDF, CSV, or XLSX up to 10MB</p>
               </div>
             </div>

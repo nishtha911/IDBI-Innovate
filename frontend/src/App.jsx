@@ -5,6 +5,10 @@ import NewAssessment from './pages/NewAssessment';
 import AssessmentResult from './pages/AssessmentResult';
 import AssessmentHistory from './pages/AssessmentHistory';
 import Settings from './pages/Settings';
+import Analytics from './pages/Analytics';
+import Profile from './pages/Profile';
+import Reports from './pages/Reports';
+import Support from './pages/Support';
 
 function App() {
   return (
@@ -16,7 +20,11 @@ function App() {
           <Route path="assessment/new" element={<NewAssessment />} />
           <Route path="assessment/:id" element={<AssessmentResult />} />
           <Route path="history" element={<AssessmentHistory />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="support" element={<Support />} />
         </Route>
       </Routes>
     </BrowserRouter>

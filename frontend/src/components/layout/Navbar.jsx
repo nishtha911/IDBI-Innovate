@@ -1,9 +1,21 @@
 import { Menu, Bell, UserCircle, Search, Globe, ChevronDown, Phone, Mail } from 'lucide-react';
 import useAppStore from '../../store/useAppStore';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const toggleSidebar = useAppStore((state) => state.toggleSidebar);
   const user = useAppStore((state) => state.user);
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate('/history');
+      setSearchQuery('');
+    }
+  };
 
   return (
     <div className="flex flex-col w-full sticky top-0 z-10 shadow-sm">
@@ -51,14 +63,16 @@ const Navbar = () => {
 
         {/* Global Search */}
         <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
-          <div className="relative w-full">
+          <form onSubmit={handleSearchSubmit} className="relative w-full">
             <input 
               type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search companies, GSTIN, or reports..." 
               className="w-full pl-10 pr-4 py-1.5 bg-gray-50 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-finsight-teal focus:border-finsight-teal"
             />
             <Search size={16} className="absolute left-3 top-2 text-gray-400" />
-          </div>
+          </form>
         </div>
 
         <div className="flex items-center gap-4">
