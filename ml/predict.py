@@ -339,12 +339,8 @@ def predict(
     features_df = pd.DataFrame([feature_row])
 
     # 5. Scaling (StandardScaler)
-    # Scaler was trained only on numerical columns
-    numeric_feature_cols = [
-        c for c in _FEATURE_NAMES
-        if not any(c.startswith(f"{cat}_") for cat in config.CATEGORICAL_COLUMNS)
-    ]
-    features_df[numeric_feature_cols] = _SCALER.transform(features_df[numeric_feature_cols])
+    # Scaler was fitted on all features (including one-hot encoded fields)
+    features_df[_FEATURE_NAMES] = _SCALER.transform(features_df[_FEATURE_NAMES])
 
     X = features_df.values
 
