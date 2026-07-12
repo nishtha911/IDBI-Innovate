@@ -3,7 +3,7 @@ import { Card, CardHeader, CardContent } from '../../components/common/Card';
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import clsx from 'clsx';
-
+import { exportAssessmentPDF } from '../../utils/pdfExport';
 
 const mockData = {
   score: 72,
@@ -54,30 +54,7 @@ const AssessmentResult = () => {
     data.riskCategory === 'Amber' ? 'text-amber-600 bg-amber-50 border-amber-200' :
     'text-red-600 bg-red-50 border-red-200';
   
-  const handleDownloadPDF = () => {
-    const element = document.getElementById('report-content');
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Assessment Report ${id} - FinSight</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; font-size: 13px; color: #1f2937; }
-            * { box-sizing: border-box; }
-            button { display: none !important; }
-          </style>
-        </head>
-        <body>${element.innerHTML}</body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-      printWindow.print();
-      printWindow.close();
-    }, 500);
-  };
+  const handleDownloadPDF = () => exportAssessmentPDF(id, data);
 
   return (
     <div className="space-y-6" id="report-content">

@@ -8,6 +8,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsToolti
 import clsx from 'clsx';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { exportDashboardPDF } from '../../utils/pdfExport';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -29,29 +30,7 @@ const Dashboard = () => {
     fetchMetrics();
   }, []);
 
-  const handleExportPDF = () => {
-    const element = document.getElementById('dashboard-content');
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Dashboard Report - FinSight</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 16px; font-size: 12px; color: #1f2937; }
-            * { box-sizing: border-box; }
-          </style>
-        </head>
-        <body>${element.innerHTML}</body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout(() => {
-      printWindow.print();
-      printWindow.close();
-    }, 500);
-  };
+  const handleExportPDF = () => exportDashboardPDF(metrics);
 
   if (loading) {
     return (
